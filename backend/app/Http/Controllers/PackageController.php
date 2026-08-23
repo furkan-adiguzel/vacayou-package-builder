@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\PublishPackage;
 use App\Enums\PackageStatus;
 use App\Http\Requests\SaveDraftPackageRequest;
 use App\Http\Resources\PackageResource;
@@ -63,5 +64,10 @@ class PackageController extends Controller
         });
 
         return PackageResource::make($package->refresh()->load(['property', 'inclusions']));
+    }
+
+    public function publish(VacationPackage $package, PublishPackage $publishPackage): PackageResource
+    {
+        return PackageResource::make($publishPackage->execute($package));
     }
 }
