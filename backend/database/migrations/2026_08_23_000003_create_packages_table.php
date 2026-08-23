@@ -13,7 +13,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('property_id')->nullable()->constrained()->nullOnDelete();
             $table->string('status')->default(PackageStatus::Draft->value)->index();
-            $table->string('title')->nullable();
+            $table->text('title')->nullable();
             $table->text('description')->nullable();
             $table->decimal('price', 10, 2)->nullable();
             $table->date('travel_start_date')->nullable();
