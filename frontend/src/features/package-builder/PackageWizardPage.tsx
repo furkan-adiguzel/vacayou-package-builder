@@ -10,6 +10,11 @@ import {
   Card,
   Chip,
   Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Snackbar,
   Stack,
   Step,
@@ -17,8 +22,8 @@ import {
   StepLabel,
   Stepper,
 } from '@mui/material';
-import { useEffect, useMemo, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useBlocker, useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   ApiError,
   getPackage,
@@ -117,6 +122,11 @@ function PackageWizardEditor({
   const [dirty, setDirty] = useState(false);
   const [errors, setErrors] = useState<StepErrors>({});
   const [savedNotice, setSavedNotice] = useState(false);
+  const allowNavigation = useRef(false);
+  const blocker = useBlocker(
+    ({ currentLocation, nextLocation }) =>
+      dirty && !allowNavigation.current && currentLocation.pathname !== nextLocation.pathname,
+  );
 
   useEffect(() => {
     if (initialPackage.status === 'draft' && !openedForEditing) {
@@ -144,6 +154,7 @@ function PackageWizardEditor({
       return publishPackage(saved.id);
     },
     onSuccess: (published) => {
+      allowNavigation.current = true;
       setDirty(false);
       queryClient.setQueryData(['package', published.id], published);
       queryClient.invalidateQueries({ queryKey: ['packages'] });
@@ -248,7 +259,14 @@ function PackageWizardEditor({
           )}
         </Stack>
 
-        {requestMessage && <Alert severity="error">{requestMessage}</Alert>}
+        {requestMessage && (
+          <Alert severity="error">
+            <strong>{requestMessage}</strong>
+            {Object.values(errors).flat().map((message) => (
+              <div key={message}>{message}</div>
+            ))}
+          </Alert>
+        )}
 
         {!readOnly && (
           <Card sx={{ px: { xs: 2, md: 4 }, py: { xs: 2.5, md: 3 } }}>
@@ -351,6 +369,26 @@ function PackageWizardEditor({
         onClose={() => setSavedNotice(false)}
         message="Draft saved"
       />
+      <Dialog open={blocker.state === 'blocked'} onClose={() => blocker.reset?.()}>
+        <DialogTitle>Leave with unsaved changes?</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Your latest changes have not been saved. Leave now and they will be lost.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => blocker.reset?.()}>Stay here</Button>
+          <Button
+            color="error"
+            onClick={() => {
+              allowNavigation.current = true;
+              blocker.proceed?.();
+            }}
+          >
+            Leave without saving
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }
