@@ -2,22 +2,36 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Inclusion;
+use App\Models\Property;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
+        Property::query()->insert([
+            ['id' => 1, 'name' => 'Azure Cove Resort & Spa', 'location' => 'Bodrum, Türkiye', 'nightly_rate' => 210],
+            ['id' => 2, 'name' => 'Alpengrün Lodge', 'location' => 'Innsbruck, Austria', 'nightly_rate' => 175],
+            ['id' => 3, 'name' => 'Casa Verde Wellness Retreat', 'location' => 'Tulum, Mexico', 'nightly_rate' => 240],
+            ['id' => 4, 'name' => 'Kyoto Zen Garden Hotel', 'location' => 'Kyoto, Japan', 'nightly_rate' => 195],
+            ['id' => 5, 'name' => 'Santorini Cliffside Suites', 'location' => 'Oia, Greece', 'nightly_rate' => 320],
+            ['id' => 6, 'name' => 'Highland Mist Manor', 'location' => 'Scottish Highlands, UK', 'nightly_rate' => 150],
+        ]);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        Inclusion::query()->insert([
+            ['id' => 1, 'name' => 'Full-day spa access', 'category' => 'spa', 'price' => 60],
+            ['id' => 2, 'name' => 'Deep tissue massage (60 min)', 'category' => 'spa', 'price' => 85],
+            ['id' => 3, 'name' => 'Thermal pool circuit', 'category' => 'spa', 'price' => 40],
+            ['id' => 4, 'name' => 'Sunrise yoga session', 'category' => 'activity', 'price' => 25],
+            ['id' => 5, 'name' => 'Guided hiking tour', 'category' => 'activity', 'price' => 55],
+            ['id' => 6, 'name' => 'Catamaran sunset cruise', 'category' => 'activity', 'price' => 120],
+            ['id' => 7, 'name' => 'E-bike day rental', 'category' => 'activity', 'price' => 45],
+            ['id' => 8, 'name' => 'Cooking class with local chef', 'category' => 'dining', 'price' => 90],
+            ['id' => 9, 'name' => 'Daily breakfast', 'category' => 'dining', 'price' => 30],
+            ['id' => 10, 'name' => 'Wine tasting dinner', 'category' => 'dining', 'price' => 110],
+            ['id' => 11, 'name' => 'Champagne welcome amenity', 'category' => 'dining', 'price' => 50],
+            ['id' => 12, 'name' => 'Airport round-trip transfer', 'category' => 'transfer', 'price' => 70],
         ]);
     }
 }
