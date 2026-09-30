@@ -13,7 +13,7 @@ Operators create an empty server-backed draft, then move through four guarded st
 
 1. **Property** — choose exactly one property, with server-side name/location search.
 2. **Inclusions** — add at least one spa, activity, dining, or transfer item.
-3. **Details** — provide a valid title, price, and future travel range; description is optional.
+3. **Details** — provide a valid title, price, and future travel range; subtitle and description are optional.
 4. **Review & publish** — review the complete package, save it as a draft, or publish it permanently.
 
 Drafts can be incomplete, explicitly saved from any step, reopened from the package list, and resumed at their last saved step. Published packages are final and only have a read-only view.
@@ -90,7 +90,7 @@ All endpoints return JSON. Successful resources use Laravel's `{ "data": ... }` 
 | `PATCH` | `/api/packages/{id}` | Partially update a draft | `200` |
 | `POST` | `/api/packages/{id}/publish` | Validate and permanently publish a draft | `200` |
 
-Draft updates accept only these fields: `property_id`, `inclusion_ids`, `title`, `description`, `price`, `travel_start_date`, `travel_end_date`, and `current_step`. Status and `published_at` cannot be set through the draft endpoint.
+Draft updates accept only these fields: `property_id`, `inclusion_ids`, `title`, `subtitle`, `description`, `price`, `travel_start_date`, `travel_end_date`, and `current_step`. Status and `published_at` cannot be set through the draft endpoint.
 
 A failed publish returns all discovered problems in one response:
 

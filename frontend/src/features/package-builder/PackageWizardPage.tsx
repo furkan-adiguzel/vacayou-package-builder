@@ -47,6 +47,7 @@ function toDraftPayload(draft: PackageData, currentStep: number): DraftPayload {
     property_id: draft.property_id,
     inclusion_ids: draft.inclusion_ids,
     title: draft.title,
+    subtitle: draft.subtitle,
     description: draft.description,
     price: draft.price,
     travel_start_date: draft.travel_start_date,

@@ -75,11 +75,32 @@ class PublishPackageApiTest extends TestCase
             ->assertJsonPath('errors.travel_end_date.0', 'The travel end date must be after the start date.');
     }
 
+    public function test_publish_rejects_a_subtitle_longer_than_100_characters(): void
+    {
+        $package = VacationPackage::query()->create([
+            'property_id' => 1,
+            'title' => 'Bodrum Wellness Escape',
+            'subtitle' => str_repeat('a', 101),
+            'price' => 850,
+            'travel_start_date' => '2027-06-10',
+            'travel_end_date' => '2027-06-15',
+        ]);
+        $package->inclusions()->sync([1]);
+
+        $this->postJson("/api/packages/{$package->id}/publish")
+            ->assertUnprocessable()
+            ->assertJsonPath(
+                'errors.subtitle.0',
+                'The package subtitle may not be greater than 100 characters.',
+            );
+    }
+
     public function test_a_valid_draft_can_be_published(): void
     {
         $package = VacationPackage::query()->create([
             'property_id' => 1,
             'title' => 'Bodrum Wellness Escape',
+            'subtitle' => 'A restorative break by the sea',
             'description' => 'Five restful days by the Aegean.',
             'price' => 850,
             'travel_start_date' => '2027-06-10',
@@ -91,6 +112,7 @@ class PublishPackageApiTest extends TestCase
         $this->postJson("/api/packages/{$package->id}/publish")
             ->assertOk()
             ->assertJsonPath('data.status', 'published')
+            ->assertJsonPath('data.subtitle', 'A restorative break by the sea')
             ->assertJsonPath('data.current_step', 4)
             ->assertJsonPath('data.inclusion_ids', [1, 12])
             ->assertJsonPath('data.published_at', '2027-06-10T10:00:00+00:00');

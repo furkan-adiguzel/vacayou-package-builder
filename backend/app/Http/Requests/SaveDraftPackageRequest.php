@@ -34,6 +34,7 @@ class SaveDraftPackageRequest extends FormRequest
             'inclusion_ids' => ['sometimes', 'array'],
             'inclusion_ids.*' => ['integer', 'distinct', 'exists:inclusions,id'],
             'title' => ['sometimes', 'nullable', 'string'],
+            'subtitle' => ['sometimes', 'nullable', 'string'],
             'description' => ['sometimes', 'nullable', 'string'],
             'price' => ['sometimes', 'nullable', 'numeric'],
             'travel_start_date' => ['sometimes', 'nullable', 'date_format:Y-m-d'],

@@ -38,6 +38,15 @@ export function DetailsStep({ draft, errors, onChange }: DetailsStepProps) {
       />
       <TextField
         fullWidth
+        label="Subtitle"
+        value={draft.subtitle ?? ''}
+        onChange={(event) => onChange({ subtitle: event.target.value })}
+        error={Boolean(errorFor('subtitle'))}
+        helperText={errorFor('subtitle') ?? `Optional — ${draft.subtitle?.length ?? 0}/100 characters`}
+        slotProps={{ htmlInput: { maxLength: 120 } }}
+      />
+      <TextField
+        fullWidth
         multiline
         minRows={4}
         label="Description"

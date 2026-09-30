@@ -188,6 +188,11 @@ export function PackageListPage() {
                         <TableRow key={item.id}>
                           <TableCell>
                             <Typography sx={{ fontWeight: 800 }}>{item.title || 'Untitled package'}</Typography>
+                            {item.subtitle?.trim() && (
+                              <Typography variant="body2" color="text.secondary">
+                                {item.subtitle}
+                              </Typography>
+                            )}
                             <Typography variant="caption" color="text.secondary">
                               {item.inclusion_ids.length} inclusion{item.inclusion_ids.length === 1 ? '' : 's'}
                             </Typography>

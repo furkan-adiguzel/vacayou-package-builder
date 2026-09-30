@@ -23,6 +23,7 @@ class PackageResource extends JsonResource
             ),
             'inclusions' => InclusionResource::collection($this->whenLoaded('inclusions')),
             'title' => $this->title,
+            'subtitle' => $this->subtitle,
             'description' => $this->description,
             'price' => $this->price === null ? null : (float) $this->price,
             'travel_start_date' => $this->travel_start_date?->format('Y-m-d'),

@@ -24,6 +24,7 @@ export interface PackageData {
   inclusion_ids: number[];
   inclusions: Inclusion[];
   title: string | null;
+  subtitle: string | null;
   description: string | null;
   price: number | null;
   travel_start_date: string | null;
@@ -38,6 +39,7 @@ export interface DraftPayload {
   property_id: number | null;
   inclusion_ids: number[];
   title: string | null;
+  subtitle: string | null;
   description: string | null;
   price: number | null;
   travel_start_date: string | null;
