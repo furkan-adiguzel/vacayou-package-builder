@@ -15,6 +15,7 @@ class VacationPackage extends Model
         'property_id',
         'status',
         'title',
+        'subtitle',
         'description',
         'price',
         'travel_start_date',

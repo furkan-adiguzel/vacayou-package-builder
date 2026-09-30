@@ -43,6 +43,11 @@ export function ReviewStep({ draft, published = false }: ReviewStepProps) {
           <Typography variant="h3" sx={{ mt: 1, maxWidth: 650 }}>
             {draft.title || 'Untitled package'}
           </Typography>
+          {draft.subtitle?.trim() && (
+            <Typography variant="h6" sx={{ mt: 1, maxWidth: 650, color: 'rgba(255,255,255,.86)' }}>
+              {draft.subtitle}
+            </Typography>
+          )}
           {draft.description && (
             <Typography sx={{ mt: 2, maxWidth: 700, color: 'rgba(255,255,255,.72)', whiteSpace: 'pre-line' }}>
               {draft.description}

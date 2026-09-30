@@ -19,6 +19,7 @@ function detailsSchema(today: string) {
         .trim()
         .min(5, 'Use at least 5 characters.')
         .max(100, 'Keep the title to 100 characters or fewer.'),
+      subtitle: z.string().trim().max(100, 'Keep the subtitle to 100 characters or fewer.').nullable(),
       description: z.string().nullable(),
       price: z
         .number({ required_error: 'Enter a package price.', invalid_type_error: 'Enter a package price.' })
@@ -64,6 +65,7 @@ export function getStepErrors(step: number, draft: PackageData, today = todayAsI
 
   const result = detailsSchema(today).safeParse({
     title: draft.title,
+    subtitle: draft.subtitle,
     description: draft.description,
     price: draft.price,
     travel_start_date: draft.travel_start_date ?? '',

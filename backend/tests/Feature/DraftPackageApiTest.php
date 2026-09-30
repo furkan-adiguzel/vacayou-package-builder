@@ -45,12 +45,14 @@ class DraftPackageApiTest extends TestCase
             'property_id' => 1,
             'inclusion_ids' => [1, 12],
             'title' => $longTitle,
+            'subtitle' => 'A restorative break by the sea',
             'price' => -15,
             'travel_start_date' => '2020-01-01',
             'current_step' => 2,
         ])
             ->assertOk()
             ->assertJsonPath('data.title', $longTitle)
+            ->assertJsonPath('data.subtitle', 'A restorative break by the sea')
             ->assertJsonPath('data.price', -15)
             ->assertJsonPath('data.inclusion_ids', [1, 12]);
 

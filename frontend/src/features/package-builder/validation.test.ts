@@ -10,6 +10,7 @@ const validDraft: PackageData = {
   inclusion_ids: [1],
   inclusions: [],
   title: 'Bodrum Wellness Escape',
+  subtitle: null,
   description: null,
   price: 850,
   travel_start_date: '2027-06-10',
@@ -64,6 +65,20 @@ describe('wizard step gating', () => {
         '2026-08-23',
       ),
     ).toBe(true);
+  });
+
+  it('allows an omitted subtitle and validates its maximum length when present', () => {
+    expect(canProceedFromStep(2, validDraft, '2026-08-23')).toBe(true);
+
+    expect(
+      getStepErrors(
+        2,
+        { ...validDraft, subtitle: 'a'.repeat(101) },
+        '2026-08-23',
+      ),
+    ).toMatchObject({
+      subtitle: ['Keep the subtitle to 100 characters or fewer.'],
+    });
   });
 
   it('rejects an end date equal to the start date', () => {
